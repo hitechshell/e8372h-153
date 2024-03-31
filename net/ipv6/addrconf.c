@@ -38,8 +38,6 @@
  *						status etc.
  */
 
-
-
 #include <linux/errno.h>
 #include <linux/types.h>
 #include <linux/kernel.h>
@@ -3040,7 +3038,7 @@ static void addrconf_dad_completed(struct inet6_ifaddr *ifp)
 #else
 	if (((ifp->idev->cnf.accept_ra == 1 && !ifp->idev->cnf.forwarding) ||
 #endif
-	    ifp->idev->cnf.accept_ra == 2) &&
+	     ifp->idev->cnf.accept_ra == 2) &&
 	    ifp->idev->cnf.rtr_solicits > 0 &&
 	    (dev->flags&IFF_LOOPBACK) == 0 &&
 	    (ipv6_addr_type(&ifp->addr) & IPV6_ADDR_LINKLOCAL)) {

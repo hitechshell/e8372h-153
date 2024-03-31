@@ -485,28 +485,28 @@ static int do_ip_setsockopt(struct sock *sk, int level,
 	struct inet_sock *inet = inet_sk(sk);
 	int val = 0, err;
 
-    switch (optname) {
-    case IP_PKTINFO:
-    case IP_RECVTTL:
-    case IP_RECVOPTS:
-    case IP_RECVTOS:
-    case IP_RETOPTS:
-    case IP_TOS:
-    case IP_TTL:
-    case IP_HDRINCL:
-    case IP_MTU_DISCOVER:
-    case IP_RECVERR:
-    case IP_ROUTER_ALERT:
-    case IP_FREEBIND:
-    case IP_PASSSEC:
-    case IP_TRANSPARENT:
-    case IP_MINTTL:
-    case IP_NODEFRAG:
-    case IP_UNICAST_IF:
-    case IP_MULTICAST_TTL:
-    case IP_MULTICAST_ALL:
-    case IP_MULTICAST_LOOP:
-    case IP_RECVORIGDSTADDR:
+	switch (optname) {
+	case IP_PKTINFO:
+	case IP_RECVTTL:
+	case IP_RECVOPTS:
+	case IP_RECVTOS:
+	case IP_RETOPTS:
+	case IP_TOS:
+	case IP_TTL:
+	case IP_HDRINCL:
+	case IP_MTU_DISCOVER:
+	case IP_RECVERR:
+	case IP_ROUTER_ALERT:
+	case IP_FREEBIND:
+	case IP_PASSSEC:
+	case IP_TRANSPARENT:
+	case IP_MINTTL:
+	case IP_NODEFRAG:
+	case IP_UNICAST_IF:
+	case IP_MULTICAST_TTL:
+	case IP_MULTICAST_ALL:
+	case IP_MULTICAST_LOOP:
+	case IP_RECVORIGDSTADDR:
 
 #ifdef CONFIG_ATP_ROUTE
 #ifdef CONFIG_ATP_GETINDEV
@@ -1145,14 +1145,14 @@ void ipv4_pktinfo_prepare(struct sk_buff *skb)
 		pktinfo->ipi_ifindex = 0;
 		pktinfo->ipi_spec_dst.s_addr = 0;
 	}
-    /* We need to keep the dst for __ip_options_echo()
-     * We could restrict the test to opt.ts_needtime || opt.srr,
-     * but the following is good enough as IP options are not often used.
-     */
-    if (unlikely(IPCB(skb)->opt.optlen))
-        skb_dst_force(skb);
-    else
-        skb_dst_drop(skb);
+	/* We need to keep the dst for __ip_options_echo()
+	 * We could restrict the test to opt.ts_needtime || opt.srr,
+	 * but the following is good enough as IP options are not often used.
+	 */
+	if (unlikely(IPCB(skb)->opt.optlen))
+		skb_dst_force(skb);
+	else
+		skb_dst_drop(skb);
 }
 
 int ip_setsockopt(struct sock *sk, int level,

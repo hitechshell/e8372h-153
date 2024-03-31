@@ -5527,7 +5527,7 @@ no_ack:
 			#ifndef CONFIG_ATP_ROUTE
 			else
 			#endif
-			sk->sk_data_ready(sk, 0);
+				sk->sk_data_ready(sk, 0);
 			return 0;
 		}
 	}

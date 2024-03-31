@@ -440,7 +440,7 @@ unsigned int nf_nat_packet(struct nf_conn *ct,
 		struct nf_conntrack_tuple target;
 
 		/* We are aiming to look like inverse of other direction. */
-		nf_ct_invert_tuplepr(&target, &ct->tuplehash[!dir].tuple);		
+		nf_ct_invert_tuplepr(&target, &ct->tuplehash[!dir].tuple);
 #if defined(CONFIG_NAT_SA) || defined(CONFIG_NAT_SA_MODULE)	
 	if (NULL!=g_pNatEntryUpdate)
 			g_pNatEntryUpdate(skb,hooknum,ct,ctinfo,&target);
