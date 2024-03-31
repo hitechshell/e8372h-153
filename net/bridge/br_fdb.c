@@ -314,7 +314,7 @@ static void fdb_delete(struct net_bridge *br, struct net_bridge_fdb_entry *f)
     br_fdb_put(f);
 #else
 	fdb_notify(br, f, RTM_DELNEIGH);
-    call_rcu(&f->rcu, fdb_rcu_free);
+	call_rcu(&f->rcu, fdb_rcu_free);
 #endif
 }
 #endif
@@ -646,7 +646,6 @@ static struct net_bridge_fdb_entry *fdb_create(struct hlist_head *head,
 		fdb->is_static = 0;
 		fdb->updated = fdb->used = jiffies;
 		hlist_add_head_rcu(&fdb->hlist, head);
-
 #if (FEATURE_ON == MBB_CTF_COMMON)
 #if (FEATURE_ON == MBB_CTF_WIFI_IPV6)
             if (!is_local && ((BR_STATE_FORWARDING == source->state) || (BR_STATE_LEARNING == source->state)))
@@ -674,7 +673,6 @@ static struct net_bridge_fdb_entry *fdb_create(struct hlist_head *head,
         }
 #endif
 #endif /* MBB_FEATURE_FASTIP */
-
 	}
 	return fdb;
 }
@@ -700,6 +698,7 @@ static int fdb_insert(struct net_bridge *br, struct net_bridge_port *source,
 		       source->dev->name);
 		fdb_delete(br, fdb);
 	}
+
 #if ((MBB_CTF_COMMON == FEATURE_ON) || (MBB_FEATURE_FASTIP == FEATURE_ON))
 	fdb = fdb_create(head, source, addr, 1);
 #else
@@ -750,7 +749,6 @@ void br_fdb_update(struct net_bridge *br, struct net_bridge_port *source,
 					source->dev->name);
 		} else {
 			/* fastpath: update of existing entry */
-            
 #if (FEATURE_ON == MBB_CTF_COMMON)
             /* Update the brc entry incase the host moved from
              * one bridge to another or to a different port under
@@ -771,7 +769,6 @@ void br_fdb_update(struct net_bridge *br, struct net_bridge_port *source,
                 fastip_br_cache_update((unsigned char *)addr, source->dev);
             }
 #endif /* MBB_FEATURE_FASTIP */
-
 			fdb->dst = source;
 			fdb->updated = jiffies;
 		}
@@ -781,7 +778,7 @@ void br_fdb_update(struct net_bridge *br, struct net_bridge_port *source,
 #if ((MBB_CTF_COMMON == FEATURE_ON) || (MBB_FEATURE_FASTIP == FEATURE_ON))
 			fdb = fdb_create(head, source, addr, 0);
 #else
-			fdb = fdb_create(head, source,addr);
+			fdb = fdb_create(head, source, addr);
 #endif
 			if (fdb)
 				fdb_notify(br, fdb, RTM_NEWNEIGH);
@@ -1096,4 +1093,3 @@ EXPORT_SYMBOL(kfastip_handle);
 fastip_attach_t fastip_attach_fn = NULL;
 EXPORT_SYMBOL(fastip_attach_fn);
 #endif /* MBB_FEATURE_FASTIP */
-

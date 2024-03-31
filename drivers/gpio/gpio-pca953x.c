@@ -604,13 +604,14 @@ static int __devinit device_pca957x_init(struct pca953x_chip *chip, int invert)
 {
 	int ret;
 	uint16_t val = 0;
-	
+
 #if 0 /* 该代码会影响fastboot扩展gpio配置，故注掉 */
 	/* Let every port in proper state, that could save power */
 	pca953x_write_reg(chip, PCA957X_PUPD, 0x0);
 	pca953x_write_reg(chip, PCA957X_CFG, 0xffff);
 	pca953x_write_reg(chip, PCA957X_OUT, 0x0);
 #endif
+
 	ret = pca953x_read_reg(chip, PCA957X_IN, &val);
 	if (ret)
 		goto out;

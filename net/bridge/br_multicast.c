@@ -31,8 +31,6 @@
 #include <net/ip6_checksum.h>
 #endif
 
-
-
 #include "br_private.h"
 
 #define mlock_dereference(X, br) \
@@ -273,6 +271,7 @@ static void br_multicast_del_pg(struct net_bridge *br,
 		hlist_del_init(&p->mglist);
 		del_timer(&p->timer);
 		call_rcu_bh(&p->rcu, br_multicast_free_pg);
+
 #ifdef CONFIG_ATP_ROUTE
 		if (!mp->ports && !mp->mglist && mp->timer_armed &&
 #else

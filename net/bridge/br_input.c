@@ -11,7 +11,6 @@
  *	2 of the License, or (at your option) any later version.
  */
 
-
 #include <linux/slab.h>
 #include <linux/kernel.h>
 #include <linux/netdevice.h>
@@ -19,6 +18,7 @@
 #include <linux/netfilter_bridge.h>
 #include <linux/export.h>
 #include "br_private.h"
+
 #ifdef CONFIG_ATP_ROUTE
 #include <linux/atphooks.h>
 #endif
@@ -42,7 +42,8 @@ static int br_pass_frame_up(struct sk_buff *skb)
 #ifdef CONFIG_ATP_ROUTE
 	//ipcheck 处理arp时需要lan侧设备
 	ATP_HOOK_VOID(ATP_BR_LOCALIN_BF_CHG_DEV, skb, NULL, NULL);
-#endif    
+#endif
+
 	indev = skb->dev;
 #ifdef CONFIG_ATP_GETINDEV
     skb->lanindev = indev;

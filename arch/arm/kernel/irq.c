@@ -59,8 +59,6 @@ void int_switch_hook_delete(void)
     g_pIntSwitchHook = NULL;
 }
 /*2013-01-03 z67193 added end*/
-
-
 /*
  * No architecture-specific irq_finish function defined in arm/arch/irqs.h.
  */
@@ -104,7 +102,6 @@ void handle_IRQ(unsigned int irq, struct pt_regs *regs)
 	    g_ulIntFlag = 1;
 	}
     /*2013-01-03 z67193 added end*/
-
 	irq_enter();
 
 	/*
@@ -123,7 +120,6 @@ void handle_IRQ(unsigned int irq, struct pt_regs *regs)
 	irq_finish(irq);
 
 	irq_exit();
-
     /*2013-01-03 z67193 added begin*/
     /*exc int hook func*/
 	if( (NULL != g_pIntSwitchHook) && (0 != g_ulIntFlag) )
@@ -131,7 +127,6 @@ void handle_IRQ(unsigned int irq, struct pt_regs *regs)
 	    (g_pIntSwitchHook)(1, ulOldIntNum, irq);
 	}
     /*2013-01-03 z67193 added end*/
-
 	set_irq_regs(old_regs);
 }
 

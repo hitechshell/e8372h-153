@@ -11,7 +11,6 @@
  *	2 of the License, or (at your option) any later version.
  */
 
-
 #include <linux/capability.h>
 #include <linux/kernel.h>
 #include <linux/if_bridge.h>
@@ -293,7 +292,6 @@ static int old_dev_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
 	case BRCTL_GET_FDB_ENTRIES:
 		return get_fdb_entries(br, (void __user *)args[1],
 				       args[2], args[3]);
-		
 #ifdef CONFIG_ATP_BRIDGE_PORT_RELAY
         case BRCTL_SET_PORT_RELAY:
         {
@@ -302,7 +300,6 @@ static int old_dev_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
             return 0;
         }
 #endif
-
 	}
 
 	return -EOPNOTSUPP;
