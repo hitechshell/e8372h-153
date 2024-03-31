@@ -905,10 +905,10 @@ static int udp_v6_push_pending_frames(struct sock *sk)
 	int is_udplite = IS_UDPLITE(sk);
 	__wsum csum = 0;
 #ifdef CONFIG_ATP_ROUTE
-    if (up->pending == AF_INET)
-        return udp_push_pending_frames(sk);
+	if (up->pending == AF_INET)
+		return udp_push_pending_frames(sk);
 
-    fl6 = &inet->cork.fl.u.ip6;
+	fl6 = &inet->cork.fl.u.ip6;
 #endif
 	/* Grab the skbuff where UDP header space exists. */
 	if ((skb = skb_peek(&sk->sk_write_queue)) == NULL)
