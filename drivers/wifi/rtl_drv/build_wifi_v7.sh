@@ -70,6 +70,7 @@ CFG_WIFI_EXTRA_COMMON="${CFG_WIFI_EXTRA_COMMON} -I${PROJ_HOME}/modem/drv/acore/k
 #******************************************************************#
 . $(cd "$(dirname "$0")"; pwd)/build_wifi.sh
 if [ -d ${PROJ_HOME}/modem/eUAP/out/target/product/p711/system/bin ];  then
-    rsync -adF --exclude=.svn ${WIFI_OUTPUT_PATH}/ ${PROJ_HOME}/modem/eUAP/out/target/product/p711/system/bin
+	echo "[kek] WIFI_OUTPUT_PATH= "$WIFI_OUTPUT_PATH
+#    rsync -adF --exclude=.svn ${WIFI_OUTPUT_PATH}/ ${PROJ_HOME}/modem/eUAP/out/target/product/p711/system/bin
     echo "[Wi-Fi]: copy wifi to system = ${PROJ_HOME}/modem/eUAP/out/target/product/p711/system/bin"
 fi
