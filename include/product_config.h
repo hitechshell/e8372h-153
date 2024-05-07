@@ -1777,7 +1777,7 @@
 #endif
 
 #ifndef MBB_BUILD_DEBUG
-#define MBB_BUILD_DEBUG FEATURE_OFF
+#define MBB_BUILD_DEBUG FEATURE_ON
 #endif
 
 #include "mbb_config.h" 
