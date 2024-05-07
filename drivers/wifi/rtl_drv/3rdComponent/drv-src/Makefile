@@ -379,7 +379,8 @@ endif
 all: $(TARGET)
 EXTRA_CFLAGS += -fno-pic
 ARCH=arm
-KSRC=$(PWD)/../../../../../../kernel
+#KSRC=$(PWD)/../../../../../../kernel
+KSRC=$(PWD)/../../../../..
 $(TARGET): FORCE
 	@echo '--- build the $(TARGET) module'
 	make ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KSRC)  M=$(PWD) modules 

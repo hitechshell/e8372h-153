@@ -15,7 +15,8 @@ WIFI_DRV_BAK=${WIFI_HOME}/rtl_drv_bak
 echo "[Wi-Fi]: WIFI_HOME = $WIFI_HOME"
 echo "[Wi-Fi]: WIFI_MAKEFILE_DIR = $WIFI_MAKEFILE_DIR"
 
-OUT_KERNEL=${WIFI_DRV_HOME}/../../../../out
+OUT_KERNEL=${WIFI_DRV_HOME}/../../../out
+echo "[tmp] OUT_KERNEL= "$OUT_KERNEL
 echo "[Wi-Fi]: OUT_KERNEL = $OUT_KERNEL"
 if [ -z "${OUT_KERNEL}" ] || [ ! -d ${OUT_KERNEL} ];  then
     echo "[Wi-Fi]: Error: [OUT_KERNEL = ${OUT_KERNEL}] not exist, Please build kernel frist!"
@@ -54,7 +55,7 @@ fi
 #******************************************************************#
 WIFI_OUTPUT_DIR=${WIFI_DRV_HOME}/out
 echo "[Wi-Fi]: ****** check wifi output ****** "
-WIFI_OUTPUT_PATH=${WIFI_HOME}/${WIFI_OUTPUT_DIR}
+WIFI_OUTPUT_PATH=${WIFI_OUTPUT_DIR}
 echo "[Wi-Fi]: WIFI_OUTPUT_PATH = $WIFI_OUTPUT_PATH"
 if [ -z "${WIFI_OUTPUT_DIR}" ];  then
     echo "[Wi-Fi]: Error: WIFI_OUTPUT_DIR is null!"
@@ -100,6 +101,7 @@ make clean
 CFG_WIFI_EXTRA_NORMAL=""
 CFG_WIFI_EXTRA_COMMON="-DCFG_RTL_SDIO30 -DWLAN_PLATFORM_BALONG_V7 -DINTEL_BEACON_POWER_NO_INC -DSOFTAP_PS_DURATION -DSDIO_AP_PS"
 export CFG_WIFI_EXTRA_CFLAGS="${CFG_WIFI_EXTRA_COMMON}"
+echo "[tmp] wifidir "$WIFI_MAKEFILE_DIR
 make -s -C ${WIFI_MAKEFILE_DIR} ${OBB_JOBS} V=${VERBOSE} O=${OUT_KERNEL}
 rsync -a --include=.*.cmd --include=*.o --include=*.ko --exclude=*.* "${WIFI_MAKEFILE_DIR}/" "${OUT_WIFI}/MFG"
 find "${OUT_WIFI}/MFG" -type d -empty -delete
