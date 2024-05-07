@@ -35,7 +35,7 @@ if [ "${WIFI_DIR_NAME}" != "FEATURE_OFF" ]; then
     fi
     #build wifi
     cd ./rtl8192_new
-	chmod 777 build_wifi_v7.sh
+#	chmod 777 build_wifi_v7.sh
     ./build_wifi_v7.sh
     if [ ! "$?" = "0" ]; then
         echo "[Wi-Fi]: Error11: build wifi driver wifi ${WIFI_DIR_NAME} failed"
@@ -50,7 +50,7 @@ echo "[Wi-Fi]: wifi chip2 = ${WIFI_DIR_NAME}"
 if [ "${WIFI_DIR_NAME}" != "FEATURE_OFF" ]; then
     #build wifi
     cd ${OBB_ANDROID_DIR}/kernel/drivers/wifi/${WIFI_DIR_NAME}
-    chmod 777 build_wifi_v7.sh
+#    chmod 777 build_wifi_v7.sh
     ./build_wifi_v7.sh
     if [ ! "$?" = "0" ]; then
         echo "[Wi-Fi]: Error22: build wifi driver wifi ${WIFI_DIR_NAME} failed"

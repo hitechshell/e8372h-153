@@ -30,7 +30,7 @@ fi
 
 if [ -z "${CFG_WIFI_EXTRA_COMMON}" ] && [ -z "${CFG_WIFI_EXTRA_NORMAL}" ] && [ -z "${CFG_WIFI_EXTRA_FACTORY}" ];  then
     echo "[Wi-Fi]: "
-    chmod 777 . ${WIFI_DRV_HOME}/wifi_macro.sh
+#    chmod 777 . ${WIFI_DRV_HOME}/wifi_macro.sh
     . ${WIFI_DRV_HOME}/wifi_macro.sh
 fi
 if [ -z "${WIFI_MODULE_NAME}" ];  then
@@ -129,7 +129,7 @@ cp -f ${WIFI_MODULE_NAME}.ko "${WIFI_DRIVER_PATH}/${WIFI_MODULE_NAME}.ko"
 echo "[Wi-Fi]: ****** generate to system ****** "
 #copy to system bin
 echo "[Wi-Fi]: copy wifi to system = ${WIFI_OUT_SYSTEM_BIN}"
-chmod 777 -R ${WIFI_OUTPUT_PATH}
+#chmod 777 -R ${WIFI_OUTPUT_PATH}
 rsync -a --exclude=.svn --exclude=.git "${WIFI_OUTPUT_PATH}/" "${WIFI_OUT_SYSTEM_BIN}"
 WIFI_OUT_SYSTEM_BIN = ${PROJ_HOME}/modem/atpv2/out/target/product/p711/system/bin/
 WIFI_OUT_DIR_EUAP_PATH=${PROJ_HOME}/modem/atpv2/out/target/product/p711/system/bin
