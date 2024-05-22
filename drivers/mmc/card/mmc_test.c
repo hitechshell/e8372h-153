@@ -2101,7 +2101,6 @@ static int mmc_test_large_seq_perf(struct mmc_test_card *test, int write)
 		if (ret)
 			return ret;
 	}
-	/* [false alarm]:fortify disable */
 	return ret;
 }
 

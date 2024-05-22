@@ -35,8 +35,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*lint -save -e539 -e30 -e84 -e537 -e666 -e713 -e718 -e746 -e830*/
-/*lint --e{530}*/
+
 #include <linux/kernel.h>
 #include <linux/slab.h>
 #include <linux/ptrace.h>
@@ -382,7 +381,6 @@ static int dwc3_regdump_show(struct seq_file *s, void *unused)
 	struct dwc3		*dwc = s->private;
 
 	seq_printf(s, "DesignWare USB3 Core Register Dump\n");
-
 	debugfs_print_regs32(s, dwc3_regs, ARRAY_SIZE(dwc3_regs),
 			     dwc->regs, "");
 	return 0;
@@ -442,7 +440,6 @@ static ssize_t dwc3_mode_write(struct file *file,
 
 	if (copy_from_user(buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
 		return -EFAULT;
-	/* coverity[uninit_use_in_call] */
 	if (!strncmp(buf, "host", 4))
 		mode |= DWC3_GCTL_PRTCAP_HOST;
 
@@ -552,7 +549,6 @@ static ssize_t dwc3_testmode_write(struct file *file,
     else if (!strncmp(buf, "test_ep_show", strlen("test_ep_show")))
     {
         buf[count] = '\0';
-	/* coverity[tainted_data] */
          if (kstrtouint(buf + strlen("test_ep_show"), 10, &ep_number))
          {
             printk(KERN_ERR "=====Err endpoint nuber input:%d=====\n",ep_number);
@@ -651,7 +647,7 @@ static ssize_t dwc3_link_state_write(struct file *file,
 
 	if (copy_from_user(buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
 		return -EFAULT;
-	/* coverity[uninit_use_in_call] */
+
 	if (!strncmp(buf, "SS.Disabled", 11))
 		state = DWC3_LINK_STATE_SS_DIS;
 	else if (!strncmp(buf, "Rx.Detect", 9))
@@ -738,4 +734,3 @@ void __devexit dwc3_debugfs_exit(struct dwc3 *dwc)
 	debugfs_remove_recursive(dwc->root);
 	dwc->root = NULL;
 }
-/*lint -restore*/

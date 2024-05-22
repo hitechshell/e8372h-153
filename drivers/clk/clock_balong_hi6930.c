@@ -1,4 +1,3 @@
-
 #include <bsp_version.h>
 #include <bsp_clk.h>
 #include <bsp_abb.h>
@@ -620,7 +619,6 @@ static struct clk tcxo = {
     .name = "tcxo",
     .rate = TCXO,
 };
-  /*lint -save -e31*/
 static struct clk lte_sio;
 
 
@@ -827,7 +825,6 @@ define_clock(timer22, "tm22_clk", sleep_clk, CLK_32K, NULL, TM22_CLK_ID);
 define_clock(timer23, "tm23_clk", sleep_clk, CLK_32K, NULL, TM23_CLK_ID);
 define_clock(appa9_vol, "appa9_clk", peri_48m, PREI_48M, NULL, APPA9_CLK_ID);
 define_clock(moda9_vol, "mdma9_clk", peri_48m, PREI_48M, NULL, MOMA9_CLK_ID);
-  /*lint -e31*/
 define_clock(lte_sio, "sio_clk", tcxo, TCXO, perifout4_tcxo, LET_SIO_CLK);
 define_clock(hifi_dbg, "hifi_dbg_clk", peri_48m, PREI_48M, NULL, HIFI_DBG_CLK_ID);
 define_clock(hifi, "hifi_clk", peri_48m, PREI_48M, NULL, HIFI_CLK_ID);
@@ -1263,7 +1260,6 @@ define_clock(timer22, "tm22_clk", sleep_clk, CLK_32K, NULL, TM22_CLK_ID);
 define_clock(timer23, "tm23_clk", sleep_clk, CLK_32K, NULL, TM23_CLK_ID);
 define_clock(appa9_vol, "appa9_clk", peri_48m, PREI_48M, NULL, APPA9_CLK_ID);
 define_clock(moda9_vol, "mdma9_clk", peri_48m, PREI_48M, NULL, MOMA9_CLK_ID);
-  /*lint -e31*/
 define_clock(lte_sio, "sio_clk", tcxo, TCXO, perifout4_tcxo, LET_SIO_CLK);
 define_clock(hifi_dbg, "hifi_dbg_clk", peri_48m, PREI_48M, NULL, HIFI_DBG_CLK_ID);
 define_clock(hifi, "hifi_clk", peri_48m, PREI_48M, NULL, HIFI_CLK_ID);
@@ -1488,4 +1484,3 @@ struct clk_lookup hi6930_clk_lookup[] = {
 };
 
 #endif
-

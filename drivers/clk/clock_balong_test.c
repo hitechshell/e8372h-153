@@ -1,11 +1,9 @@
-
 #include <bsp_clk.h>
 #include "clock.h"
 
 #define CLK_TEST_OK 0
 #define CLK_TEST_ERROR 1
 #ifdef __KERNEL__
-/*lint --e{737}*/
 int clk_get_test_case0(void)
 {
     struct clk *sio_clk = clk_get(NULL,"sio_clk");
@@ -271,4 +269,3 @@ int clk_set_rate_test_case1(void)
     return CLK_TEST_OK;
 }
 #endif
-

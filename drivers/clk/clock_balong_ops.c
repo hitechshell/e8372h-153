@@ -1,5 +1,3 @@
-
-
 #include <bsp_clk.h>
 #include "clock.h"
 
@@ -42,7 +40,6 @@ static struct clk *hi6930_clk_find_parent_from_selparents(struct clk *clk, unsig
 
 int hi6930_clk_enable (struct clk *clk)
 {
-       /*lint -e550*/
         unsigned int clkid = 0;
         unsigned int clkcon = 0;
         clkid = clk->clkid;
@@ -248,4 +245,3 @@ struct clk_ops clock_ops_div_n = {
 	hi6930_clk_set_rate_n,
 	hi6930_clk_set_parent,
 };
-

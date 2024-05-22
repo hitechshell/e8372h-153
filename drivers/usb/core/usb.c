@@ -45,6 +45,7 @@
 #include "usb.h"
 #include "bsp_usb.h"
 
+
 const char *usbcore_name = "usbcore";
 
 static bool nousb;	/* Disable USB when built into kernel image */

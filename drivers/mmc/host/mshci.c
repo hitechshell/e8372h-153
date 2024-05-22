@@ -14,7 +14,6 @@
  * your option) any later version.
  */
 
- /*lint -save -e19 -e62 -e64 -e123 -e514 -e530 -e537 -e547 -e548 -e648 -e681 -e701 -e713 -e718 -e730 -e732 -e737 -e746 -e747 -e767 -e778 -e830 -e958 -e1564*/
 #include <linux/delay.h>
 #include <linux/highmem.h>
 #include <linux/io.h>
@@ -48,7 +47,6 @@ static unsigned int debug = 2;
 #endif
 
 static unsigned int quirks;
-/*lint --e{457 } */
 #define DBG(f, x...) \
 do { \
 		if (debug & 0x1) {\
@@ -532,7 +530,7 @@ static int mshci_mdma_table_pre(struct mshci_host *host,
 		desc_phy += size_idmac;
 
 		/* If this triggers then we have a calculation bug somewhere */
-		WARN_ON((desc_vir - host->idma_desc) > DMA_SG_NUM * size_idmac);/*lint !e574*/
+		WARN_ON((desc_vir - host->idma_desc) > DMA_SG_NUM * size_idmac);
 	}
 
 	/* Add a terminating flag */
@@ -650,7 +648,7 @@ static void mshci_prepare_data(struct mshci_host *host, struct mmc_data *data)
 					break;
 				} else
 			#else
-				if (sg && (sg->offset & 0x3)) { /*lint !e115*/
+				if (sg && (sg->offset & 0x3)) {
 			#endif
 					DBG("Reverting to PIO because of "
 						"bad alignment\n");
@@ -2009,4 +2007,3 @@ MODULE_AUTHOR("Hyuk Lee <hyuk1.lee@samsung.com>");
 MODULE_DESCRIPTION("Mobile Storage Host Controller Interface core driver");
 MODULE_LICENSE("GPL");
 #endif
- /*lint -restore*/

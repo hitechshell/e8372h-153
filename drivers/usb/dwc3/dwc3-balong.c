@@ -13,9 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-/*lint -save -e34 -e537 -e737*/
 
-/*lint -e34*/
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/platform_device.h>
@@ -99,7 +97,7 @@ static void bc_set_soft_mode(void)
     reg |= 0x1;/* [false alarm]:Disable fortify false alarm */
     writel(reg, HI_BC_CTRL_REGBASE_ADDR_VIRT + 0x0);
     return;
-}/*lint !e550*/
+}
 
 static void bc_set_bypass_mode(void)
 {
@@ -111,7 +109,7 @@ static void bc_set_bypass_mode(void)
     writel(reg, HI_BC_CTRL_REGBASE_ADDR_VIRT + 0x0);
 
     return;
-}/*lint !e550*/
+}
 
 static unsigned bc_set_test_volt(void)
 {
@@ -180,10 +178,10 @@ int bc_charger_type_identify(void)
     */
     record_reg = bc_set_test_volt();
 #if defined(BSP_CONFIG_BOARD_E5771S_852) || defined(BSP_CONFIG_BOARD_E5771H_937)
-    mdelay(150);/*lint !e62*/
+    mdelay(150);
 #else
     /* wait 50ms for D+ signal go to D- */
-    mdelay(50);/*lint !e62*/
+    mdelay(50);
 #endif
     /*
     get D- signal, and detect the charger type
@@ -195,12 +193,12 @@ int bc_charger_type_identify(void)
     /* restore the default setting */
     bc_set_record_volt(record_reg);
 
-    mdelay(20);/*lint !e62*/
+    mdelay(20);
 
     /* restore to bypass mode */
     bc_set_bypass_mode();
 
-    mdelay(2);/*lint !e62*/
+    mdelay(2);
 
     return type;
 }
@@ -392,7 +390,7 @@ void usb3_sysctrl_init(void)
     writel(value,IO_ADDRESS(IO_REGISTER_ADDRESS));
 #endif
 #endif
-    mdelay(10);/*lint !e62*/
+    mdelay(10);
 }
 
 #if (FEATURE_ON == MBB_CHARGE)
@@ -465,7 +463,7 @@ void usb3_sysctrl_exit(void)
     hi_syssc_usb_powerdown_hsp(1);
     hi_syssc_usb_powerdown_ssp(1);
 
-    mdelay(2);/*lint !e62*/
+    mdelay(2);
     usb3_bc_clk_disable();
 
 	/* put the usb-otg & usb-bc clock */
@@ -541,4 +539,3 @@ void sdio_current_set(void)
 MODULE_AUTHOR("BALONG USBNET GROUP");
 MODULE_LICENSE("Dual BSD/GPL");
 MODULE_DESCRIPTION("BALONG USB3 DRD Controller Driver");
-/*lint -restore*/

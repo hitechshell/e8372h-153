@@ -9,7 +9,6 @@
  * Author:  jingyong
  *          28 Jan 2013
  */
-/*lint -save -e19 -e30 -e64 -e84 -e123 -e438 -e529 -e530 -e537 -e701 -e713 -e718 -e746 -e730 -e732 -e737 -e767 -e813 -e830 -e958 -e959*/
 
 #include "hi_base.h"
 #include "hi_syscrg_interface.h"
@@ -2111,4 +2110,3 @@ MODULE_AUTHOR("Hisilicon Driver Group");
 MODULE_DESCRIPTION("MMC/SD driver for the Hisilicon MMC/SD Host Controller");
 MODULE_LICENSE("GPL");
 #endif
-/*lint -restore*/

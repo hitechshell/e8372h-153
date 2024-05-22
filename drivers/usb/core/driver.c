@@ -32,6 +32,7 @@
 #include "usb.h"
 #include "bsp_usb.h"
 
+
 #ifdef CONFIG_HOTPLUG
 
 /*
@@ -48,11 +49,12 @@ ssize_t usb_store_new_id(struct usb_dynids *dynids,
 	unsigned int bInterfaceClass = 0;
 	int fields = 0;
 	int retval = 0;
-	/* coverity[secure_coding] */
+
 	fields = sscanf(buf, "%x %x %x", &idVendor, &idProduct,
 					&bInterfaceClass);
 	if (fields < 2)
 		return -EINVAL;
+
 	dynid = kzalloc(sizeof(*dynid), GFP_KERNEL);
 	if (!dynid)
 		return -ENOMEM;
@@ -71,10 +73,9 @@ ssize_t usb_store_new_id(struct usb_dynids *dynids,
 	spin_unlock(&dynids->lock);
 
 	retval = driver_attach(driver);
-	/* coverity[leaked_storage] */
+
 	if (retval)
 		return retval;
-	/* coverity[leaked_storage] */
 	return count;
 }
 EXPORT_SYMBOL_GPL(usb_store_new_id);
@@ -105,7 +106,7 @@ store_remove_id(struct device_driver *driver, const char *buf, size_t count)
 	u32 idProduct = 0;
 	int fields = 0;
 	int retval = 0;
-	/* coverity[secure_coding] */
+
 	fields = sscanf(buf, "%x %x", &idVendor, &idProduct);
 	if (fields < 2)
 		return -EINVAL;
@@ -122,7 +123,7 @@ store_remove_id(struct device_driver *driver, const char *buf, size_t count)
 		}
 	}
 	spin_unlock(&usb_driver->dynids.lock);
-	/* coverity[dead_error_condition] */
+
 	if (retval)
 		return retval;
 	return count;
@@ -214,7 +215,7 @@ static int usb_probe_device(struct device *dev)
 	struct usb_device *udev = to_usb_device(dev);
 	int error = 0;
 
-	USB_DBG_CORE(dev, "%s\n", __func__);
+	dev_dbg(dev, "%s\n", __func__);
 
 	/* TODO: Add real matching code */
 
@@ -265,7 +266,7 @@ static int usb_probe_interface(struct device *dev)
 	const struct usb_device_id *id;
 	int error = -ENODEV;
 
-	USB_DBG_CORE(dev, "%s\n", __func__);
+	dev_dbg(dev, "%s\n", __func__);
 
 	intf->needs_binding = 0;
 
@@ -283,7 +284,7 @@ static int usb_probe_interface(struct device *dev)
 	if (!id)
 		return error;
 
-	USB_DBG_CORE(dev, "%s - got id\n", __func__);
+	dev_dbg(dev, "%s - got id\n", __func__);
 
 	error = usb_autoresume_device(udev);
 	if (error)
@@ -1106,7 +1107,6 @@ static int usb_resume_interface(struct usb_device *udev,
 
 		/* Carry out a deferred switch to altsetting 0 */
 		if (intf->needs_altsetting0 && !intf->dev.power.is_prepared) {
-			/* coverity[check_return] */
 			usb_set_interface(udev, intf->altsetting[0].
 					desc.bInterfaceNumber, 0);
 			intf->needs_altsetting0 = 0;

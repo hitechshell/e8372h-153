@@ -419,7 +419,7 @@ int usb_sg_init(struct usb_sg_request *io, struct usb_device *dev,
 			if (len == 0) {
 				struct scatterlist	*sg2;
 				int			j;
-				/* coverity[returned_null] */
+
 				for_each_sg(sg, sg2, nents, j)
 					len += sg2->length;
 			}
@@ -651,7 +651,7 @@ int usb_get_descriptor(struct usb_device *dev, unsigned char type,
 		}
 		break;
 	}
-	return result;/* [false alarm]:fortify disable */
+	return result;
 }
 EXPORT_SYMBOL_GPL(usb_get_descriptor);
 
@@ -697,7 +697,7 @@ static int usb_get_string(struct usb_device *dev, unsigned short langid,
 		}
 		break;
 	}
-	return result;/* [false alarm]:fortify disable */
+	return result;
 }
 
 static void usb_try_string_workarounds(unsigned char *buf, int *length)
@@ -788,7 +788,7 @@ static int usb_get_langid(struct usb_device *dev, unsigned char *tbuf)
 	/* always use the first langid listed */
 	dev->string_langid = tbuf[2] | (tbuf[3] << 8);
 	dev->have_langid = 1;
-	USB_DBG_CORE(&dev->dev, "default language 0x%04x\n",
+	dev_dbg(&dev->dev, "default language 0x%04x\n",
 				dev->string_langid);
 	return 0;
 }
@@ -1162,7 +1162,7 @@ void usb_disable_device(struct usb_device *dev, int skip_ep0)
 			interface = dev->actconfig->interface[i];
 			if (!device_is_registered(&interface->dev))
 				continue;
-			USB_DBG_CORE(&dev->dev, "unregistering interface %s\n",
+			dev_dbg(&dev->dev, "unregistering interface %s\n",
 				dev_name(&interface->dev));
 			remove_intf_ep_devs(interface);
 			device_del(&interface->dev);
@@ -1180,7 +1180,7 @@ void usb_disable_device(struct usb_device *dev, int skip_ep0)
 			usb_set_device_state(dev, USB_STATE_ADDRESS);
 	}
 
-	USB_DBG_CORE(&dev->dev, "%s nuking %s URBs\n", __func__,
+	dev_dbg(&dev->dev, "%s nuking %s URBs\n", __func__,
 		skip_ep0 ? "non-ep0" : "all");
 	if (hcd->driver->check_bandwidth) {
 		/* First pass: Cancel URBs, leave endpoint pointers intact. */
@@ -1730,7 +1730,7 @@ int usb_set_configuration(struct usb_device *dev, int configuration)
 				ret = -ENOMEM;
 free_interfaces:
 				while (--n >= 0)
-					kfree(new_interfaces[n]);/* [false alarm]:fortify disable */
+					kfree(new_interfaces[n]);
 				kfree(new_interfaces);
 				return ret;
 			}
@@ -1849,7 +1849,7 @@ free_interfaces:
 	for (i = 0; i < nintf; ++i) {
 		struct usb_interface *intf = cp->interface[i];
 
-		USB_DBG_CORE(&dev->dev,
+		dev_dbg(&dev->dev,
 			"adding %s (config #%d, interface %d)\n",
 			dev_name(&intf->dev), configuration,
 			intf->cur_altsetting->desc.bInterfaceNumber);
@@ -1948,7 +1948,6 @@ int usb_driver_set_configuration(struct usb_device *udev, int config)
 
 	usb_get_dev(udev);
 	schedule_work(&req->work);
-	/* coverity[leaked_storage] */
 	return 0;
 }
 EXPORT_SYMBOL_GPL(usb_driver_set_configuration);

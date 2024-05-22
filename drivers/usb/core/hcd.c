@@ -45,6 +45,7 @@
 #include "usb.h"
 #include "bsp_usb.h"
 
+
 /*-------------------------------------------------------------------------*/
 
 /*
@@ -376,7 +377,6 @@ ascii2desc(char const *s, u8 *buf, unsigned len)
 
 	n = len;
 	while (n--) {
-		/* coverity[truncate_const] */
 		*buf++ = t;
 		if (!n--)
 			break;
@@ -848,7 +848,6 @@ static ssize_t usb_host_authorized_default_store(struct device *dev,
 	if (usb_bus == NULL)	/* FIXME: not sure if this case is possible */
 		return -ENODEV;
 	usb_hcd = bus_to_hcd(usb_bus);
-	/* coverity[secure_coding] */
 	result = sscanf(buf, "%u\n", &val);
 	if (result == 1) {
 		usb_hcd->authorized_default = val? 1 : 0;
@@ -931,7 +930,7 @@ static int usb_register_bus(struct usb_bus *bus)
 
 	usb_notify_add_bus(bus);
 
-	USB_DBG_CORE (bus->controller, "new USB bus registered, assigned bus "
+	dev_info (bus->controller, "new USB bus registered, assigned bus "
 		  "number %d\n", bus->busnum);
 	return 0;
 
@@ -1441,7 +1440,6 @@ int usb_hcd_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
 		}
 		if (ret && (urb->transfer_flags & (URB_SETUP_MAP_SINGLE |
 				URB_SETUP_MAP_LOCAL)))
-			/* coverity[var_deref_model] */
 			usb_hcd_unmap_urb_for_dma(hcd, urb);
 	}
 	return ret;
@@ -2362,7 +2360,7 @@ static int usb_hcd_request_irqs(struct usb_hcd *hcd,
 			return retval;
 		}
 		hcd->irq = irqnum;
-		USB_DBG_CORE(hcd->self.controller, "irq %d, %s 0x%08llx\n", irqnum,
+		dev_info(hcd->self.controller, "irq %d, %s 0x%08llx\n", irqnum,
 				(hcd->driver->flags & HCD_MEMORY) ?
 					"io mem" : "io base",
 					(unsigned long long)hcd->rsrc_start);
@@ -2393,7 +2391,7 @@ int usb_add_hcd(struct usb_hcd *hcd,
 	int retval;
 	struct usb_device *rhdev;
 
-	USB_DBG_CORE(hcd->self.controller, "%s\n", hcd->product_desc);
+	dev_info(hcd->self.controller, "%s\n", hcd->product_desc);
 
 	/* Keep old behaviour if authorized_default is not in [0, 1]. */
 	if (authorized_default < 0 || authorized_default > 1)
@@ -2601,8 +2599,8 @@ EXPORT_SYMBOL_GPL(usb_remove_hcd);
 void
 usb_hcd_platform_shutdown(struct platform_device* dev)
 {
-	/* coverity[returned_null] */
 	struct usb_hcd *hcd = platform_get_drvdata(dev);
+
 	if (hcd->driver->shutdown)
 		hcd->driver->shutdown(hcd);
 }

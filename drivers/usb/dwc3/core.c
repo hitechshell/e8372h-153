@@ -1,5 +1,3 @@
-/*lint -save -e648 -e572 -e322 -e19 -e526 -e537 -e666 -e730 -e732 -e737 -e958 --e{550}*/
-
 /**
  * core.c - DesignWare USB3 DRD Controller Core file
  *
@@ -62,13 +60,13 @@
 #include "debug.h"
 
 static char *maximum_speed = "super";
-module_param(maximum_speed, charp, 0);/*lint !e84 !e21*/
+module_param(maximum_speed, charp, 0);
 MODULE_PARM_DESC(maximum_speed, "Maximum supported speed.");
 unsigned long dwc3_msg_level = DWC3_MSG_ERR;
+
 /* -------------------------------------------------------------------------- */
 
 static void * sg_dwc3_base_virt = NULL;
-
 
 #define DWC3_DEVS_POSSIBLE	32
 
@@ -105,7 +103,7 @@ void dwc3_put_device_id(int id)
 	ret = test_bit(id, dwc3_devs);
 	WARN(!ret, "dwc3: ID %d not in use\n", id);
 	clear_bit(id, dwc3_devs);
-}/*lint !e550*/
+}
 EXPORT_SYMBOL_GPL(dwc3_put_device_id);
 
 void dwc3_set_mode(struct dwc3 *dwc, u32 mode)
@@ -144,7 +142,7 @@ static void dwc3_core_soft_reset(struct dwc3 *dwc)
     dwc3_gadget_usb2_phy_init(dwc);
     dwc3_gadget_usb3_phy_init(dwc);
 
-	mdelay(100);/*lint !e62*/
+	mdelay(100);
 
 	/* Clear USB3 PHY reset */
 	reg = dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0));
@@ -156,7 +154,7 @@ static void dwc3_core_soft_reset(struct dwc3 *dwc)
 	reg &= ~DWC3_GUSB2PHYCFG_PHYSOFTRST;
 	dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
 
-	mdelay(100);/*lint !e62*/
+	mdelay(100);
 
 	/* After PHYs are stable we can take Core out of reset state */
 	reg = dwc3_readl(dwc->regs, DWC3_GCTL);
@@ -212,7 +210,7 @@ dwc3_alloc_one_event_buffer(struct dwc3 *dwc, unsigned length)
 static void dwc3_free_event_buffers(struct dwc3 *dwc)
 {
 	struct dwc3_event_buffer	*evt;
-	unsigned int i;
+	int i;
 
 	for (i = 0; i < dwc->num_event_buffers; i++) {
 		evt = dwc->ev_buffs[i];
@@ -268,13 +266,13 @@ static int __devinit dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned length)
 static int dwc3_event_buffers_setup(struct dwc3 *dwc)
 {
 	struct dwc3_event_buffer	*evt;
-	unsigned int				n;
+	int				n;
 
 	for (n = 0; n < dwc->num_event_buffers; n++) {
 		evt = dwc->ev_buffs[n];
-		DWC3_INFO(("Event buf %p dma %08llx length %d\n",
+		dev_dbg(dwc->dev, "Event buf %p dma %08llx length %d\n",
 				evt->buf, (unsigned long long) evt->dma,
-				evt->length));
+				evt->length);
 
 		evt->lpos = 0;
 
@@ -293,7 +291,7 @@ static int dwc3_event_buffers_setup(struct dwc3 *dwc)
 static void dwc3_event_buffers_cleanup(struct dwc3 *dwc)
 {
 	struct dwc3_event_buffer	*evt;
-	unsigned int				n;
+	int				n;
 
 	for (n = 0; n < dwc->num_event_buffers; n++) {
 		evt = dwc->ev_buffs[n];
@@ -370,7 +368,7 @@ static int __devinit dwc3_core_init(struct dwc3 *dwc)
 			goto err0;
 		}
 
-		cpu_relax();/*lint !e26*/
+		cpu_relax();
 	} while (true);
 
 	dwc3_core_soft_reset(dwc);
@@ -386,7 +384,7 @@ static int __devinit dwc3_core_init(struct dwc3 *dwc)
 		reg &= ~DWC3_GCTL_DSBLCLKGTNG;
 		break;
 	default:
-        DWC3_INFO(("No power optimization available\n"));
+		dev_dbg(dwc->dev, "No power optimization available\n");
 	}
 
 	/*
@@ -404,7 +402,7 @@ static int __devinit dwc3_core_init(struct dwc3 *dwc)
     reg |= 1<<14;
     dwc3_writel(dwc->regs, DWC3_GUCTL, reg);
 
-	ret = dwc3_alloc_event_buffers(dwc, DWC3_EVENT_BUFFERS_SIZE);/*lint !e123*/
+	ret = dwc3_alloc_event_buffers(dwc, DWC3_EVENT_BUFFERS_SIZE);
 	if (ret) {
 		dev_err(dwc->dev, "failed to allocate event buffers\n");
 		ret = -ENOMEM;
@@ -424,7 +422,7 @@ err1:
 
 err0:
 	return ret;
-}/*lint !e550*/
+}
 
 #ifdef CONFIG_USB_OTG_DWC
 
@@ -468,7 +466,7 @@ int dwc3_core_reinit(struct dwc3 *dwc)
 		reg &= ~DWC3_GCTL_DSBLCLKGTNG;
 		break;
 	default:
-        DWC3_INFO(("No power optimization available\n"));
+		dev_dbg(dwc->dev, "No power optimization available\n");
 	}
 
 	/*
@@ -528,7 +526,7 @@ static int dwc3_probe(struct platform_device *pdev)
 		dev_err(dev, "not enough memory\n");
 		return -ENOMEM;
 	}
-	dwc = PTR_ALIGN(mem, DWC3_ALIGN_MASK + 1);/*lint !e516 !e502 !e64*/
+	dwc = PTR_ALIGN(mem, DWC3_ALIGN_MASK + 1);
 	dwc->mem = mem;
 
 	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
@@ -609,6 +607,7 @@ static int dwc3_probe(struct platform_device *pdev)
 	}
 
 	mode = DWC3_MODE(dwc->hwparams.hwparams0);
+
 	switch (mode) {
 	case DWC3_MODE_DEVICE:
 		dwc3_set_mode(dwc, DWC3_GCTL_PRTCAP_DEVICE);
@@ -674,7 +673,6 @@ err2:
 		dwc3_host_exit(dwc);
 		dwc3_gadget_exit(dwc);
 		break;
-/* coverity[dead_error_begin] */
 	default:
 		/* do nothing */
 		break;
@@ -695,10 +693,9 @@ err1:
 //static int __devexit dwc3_remove(struct platform_device *pdev)
 static int dwc3_remove(struct platform_device *pdev)
 {
-	/* coverity[returned_null] */
 	struct dwc3	*dwc = platform_get_drvdata(pdev);
 	struct resource	*res;
-	/* coverity[returned_null] */
+
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 
 	pm_runtime_put(&pdev->dev);
@@ -766,4 +763,3 @@ MODULE_ALIAS("platform:dwc3");
 MODULE_AUTHOR("Felipe Balbi <balbi@ti.com>");
 MODULE_LICENSE("Dual BSD/GPL");
 MODULE_DESCRIPTION("DesignWare USB3 DRD Controller Driver");
-/*lint -restore*/

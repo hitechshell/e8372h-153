@@ -1,4 +1,3 @@
-
 #include <bsp_clk.h>
 #include "clock.h"
 

@@ -1,5 +1,3 @@
-
-
 #include <bsp_clk.h>
 #include <bsp_icc.h>
 #include "clock.h"
@@ -24,7 +22,7 @@ static int clk_strcmp(const char *cs, const char *ct)
 {
 	char c1, c2;
 	//unsigned char c1, c2;
-	while (1) {			/*lint !e716*/
+	while (1) {
 		c1 = *cs++;
 		c2 = *ct++;
 		if (c1 != c2)
@@ -441,5 +439,3 @@ void  hi6930_clock_init(void)
         clk_printf("clk init success!\n");
 }
 #endif
-
-

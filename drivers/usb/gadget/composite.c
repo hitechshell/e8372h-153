@@ -175,7 +175,6 @@ ep_found:
 	_ep->comp_desc = comp_desc;
 	if (g->speed == USB_SPEED_SUPER) {
 		switch (usb_endpoint_type(_ep->desc)) {
-		/* coverity[unterminated_case] */
 		case USB_ENDPOINT_XFER_ISOC:
 			/* mult: bits 1:0 of bmAttributes */
 			_ep->mult = comp_desc->bmAttributes & 0x3;
@@ -949,7 +948,6 @@ static int get_string(struct usb_composite_dev *cdev,
 			.language = language,
 			.strings  = &(struct usb_string) { 0xff, str }
 		};
-		/* coverity[callee_ptr_arith] */
 		return usb_gadget_get_string(&strings, 0xff, buf);
 	}
 
@@ -1085,7 +1083,6 @@ static void composite_setup_complete(struct usb_ep *ep, struct usb_request *req)
 static int
 composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 {
-	/* coverity[returned_null] */
 	struct usb_composite_dev	*cdev = get_gadget_data(gadget);
 	struct usb_request		*req = cdev->req;
 	int				value = -EOPNOTSUPP;
@@ -1368,7 +1365,6 @@ done:
 
 static void composite_disconnect(struct usb_gadget *gadget)
 {
-	/* coverity[returned_null] */
 	struct usb_composite_dev	*cdev = get_gadget_data(gadget);
 	unsigned long			flags;
 
@@ -1391,11 +1387,8 @@ static ssize_t composite_show_suspended(struct device *dev,
 					struct device_attribute *attr,
 					char *buf)
 {
-	/* coverity[returned_null] */
 	struct usb_gadget *gadget = dev_to_usb_gadget(dev);
-	/* coverity[returned_null] */
 	struct usb_composite_dev *cdev = get_gadget_data(gadget);
-	/* coverity[secure_coding] */
 	return sprintf(buf, "%d\n", cdev->suspended);
 }
 
@@ -1404,7 +1397,6 @@ static DEVICE_ATTR(suspended, 0444, composite_show_suspended, NULL);
 static void
 composite_unbind(struct usb_gadget *gadget)
 {
-	/* coverity[returned_null] */
 	struct usb_composite_dev	*cdev = get_gadget_data(gadget);
 
 	/* composite_disconnect() must already have been called
@@ -1551,7 +1543,6 @@ fail:
 static void
 composite_suspend(struct usb_gadget *gadget)
 {
-	/* coverity[returned_null] */
 	struct usb_composite_dev	*cdev = get_gadget_data(gadget);
 	struct usb_function		*f;
 
@@ -1576,7 +1567,6 @@ composite_suspend(struct usb_gadget *gadget)
 static void
 composite_resume(struct usb_gadget *gadget)
 {
-	/* coverity[returned_null] */
 	struct usb_composite_dev	*cdev = get_gadget_data(gadget);
 	struct usb_function		*f;
 	u8				maxpower;

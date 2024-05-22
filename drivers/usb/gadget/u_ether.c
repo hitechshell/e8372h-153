@@ -1,10 +1,4 @@
-/*lint -save --e{26} -e30 -e34 --e{42} -e63 -e142 --e{438} -e564 -e578 
--e573 -e52 -e831 -e413 -e132 -e101 -e2 -e565 -e84 -e516 
--e19 -e539 -e102 --e{533} -e666 --e{564} -e409 -e18 -e31 
---e{830} -e537 -e718 -e745  -e746 --e{752} -e762 -e732 -e530 -e550 -e737*/
-
-
-/**
+/*
  * u_ether.c -- Ethernet-over-USB link layer utilities for Gadget stack
  *
  * Copyright (C) 2003-2005,2008 David Brownell
@@ -3120,5 +3114,3 @@ int ncm_eth_mem_dump(char* buffer, unsigned int buf_size)
 
     return (int)need_size;
 }
-/*lint -restore*/
-
