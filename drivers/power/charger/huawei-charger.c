@@ -18,6 +18,7 @@
 #include "huawei-charger.h"
 #include "chg_config.h"
 //#include "platform/v7r2/chg_chip_platform.h"
+#include "platform/hisi/chg_chip_platform.h"
 #include "chg_charge_api.h"
 #include <linux/debugfs.h>
 #include <linux/workqueue.h>
